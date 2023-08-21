@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String 
+  description String?
+  password  String?
+  posts      post[]
+}
+
+model post {
+  id Int @default(autoincrement()) @id
+  title       String?
+  description String?
+  author_id   Int  ? 
+  author      user? @relation (fields:[author_id],references:[id])
+  @@unique([title,author_id])
+}
+model books {
+  id               Int      @id @default(autoincrement())
+  book_name        String
+  book_description String  
+  created_at       DateTime @default(now())
+}
+
+model user1{
+  id       Int  @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  pass     String
+  ph_no    Int
+  add_S     address[]
+
+}
+model address{
+  id     Int @id @default(autoincrement())
+  userid   Int 
+  house_no   Int
+  lane_no    Int 
+  city       String
+  pincode    Int?
+User     user1  @relation(fields: [userid],references: [id])  
+}
+
+model customer_details{
+ user_id         Int  @id @default(autoincrement()) @unique
+ user_name       String
+ user_ph_no      Int 
+ user_email      String  
+ user_house_no   Int
+ user_city       String
+ user_pincode    Int ?
+  price          Int
+  no_items       Int ?
+  discount       Int ?
+  order_date     DateTime?
+  order_time     Int
+ 
+}
+
+model auth_user{
+  id            Int    @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAT      DateTime   @updatedAt
+
+  email        String   @unique
+  hash         String
+  hashedRT     String?
+
+}
+model users {
+  id            Int   @id @default(autoincrement()) 
+  first_name    String
+  last_name     String?
+  email         String  @unique
+  address       String?
+  ph_no          String
+  password       String
+  newpassword    String
+  confirm_Password  String
+  created_at    DateTime @default(now())
+  updated_at    DateTime?
+  
+  @@unique([email,ph_no])
+}
+
+
+
+
+
