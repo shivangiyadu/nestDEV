@@ -58,6 +58,10 @@ export class AuthService{
             throw new HttpException('user not found',404)
         }
     }
+    async ahfhdf():Promise<any>{
+        console.log("fsafsf")
+
+    }
     async changePassword(email:string,newpassword:string,confirm_Password:string):Promise<any>{
         const hashedPassword= await bcrypt.hash(newpassword,10);
          return await this.prisma.users.update({
